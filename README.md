@@ -23,7 +23,7 @@ The repository is organized into the following key directories:
 
 ## Installation
 - Clone the repository:
-   git clone https://github.com/your-username/your-repo.git
+   git clone git@github.com:SahalN/ujian-muhammad-sahal-nurdin.git
 -  cd your-repo
       npm install
 - Install dependencies:
