@@ -1,40 +1,52 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Web Programming Exam Project Documentation
 
-## Getting Started
+## Overview
+This GitHub repository is a submission for the practical exam requirements in the web programming course. The project showcases the implementation of various web programming concepts, including HTML, CSS, and JavaScript, while integrating MongoDB for data storage, Tailwind CSS for styling, and the Next.js framework for enhanced development.
 
-First, run the development server:
+## Project Structure
+The repository is organized into the following key directories:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **`src`**: Contains the source code for the web application.
+- **`public`**: Houses static assets such as images and stylesheets.
+- **`docs`**: Documentation files related to the project.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
+- **HTML**: Structuring web pages.
+- **CSS (Tailwind CSS)**: Styling components and layouts.
+- **JavaScript (Next.js)**: Implementing dynamic functionality.
+- **MongoDB**: Storing and retrieving data efficiently.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo.git
+cd your-repo
+npm install
+Install dependencies:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+bash
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+cd your-repo
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Run the application:
 
-## Learn More
+bash
 
-To learn more about Next.js, take a look at the following resources:
+    npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+##  Additional Notes
+- Ensure that MongoDB is properly configured with connection details in the application.
+- For styling and design considerations, refer to the [Tailwind CSS documentation](https://tailwindcss.com/docs).
+- Explore the [Next.js documentation](https://nextjs.org/docs) for advanced usage and features.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contribution Guidelines
+Contributions to the project are currently not accepted, as it is a submission for examination purposes. However, feedback and suggestions for improvement are always appreciated.
+License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## This project is licensed under the MIT License.
+
+## Special thanks to the course instructors and peers for their guidance and support throughout the web programming course.
