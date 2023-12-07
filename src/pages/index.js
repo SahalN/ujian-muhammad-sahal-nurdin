@@ -1,118 +1,139 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+/** @format */
 
-const inter = Inter({ subsets: ['latin'] })
+import Link from "next/link";
+import Navbar from "./components/Navbar";
+import React, { useState } from "react";
+import axios from "axios";
 
-export default function Home() {
+export async function getStaticProps() {
+  const mongoose = require("mongoose");
+  const Note = require("../../model/Note.js");
+
+  await mongoose
+    .connect("mongodb://127.0.0.1:27017/sahalCRUD", {
+      useNewUrlParser: true,
+    })
+    .then(() => console.log("DB CONNECTED"));
+
+  const notes = await Note.find().sort({ createdAt: "desc" });
+  console.log(notes);
+  return {
+    props: {
+      notes: JSON.parse(JSON.stringify(notes)),
+    },
+  };
+}
+
+export default function Home({ notes }) {
+  const [visibleNoteId, setVisibleNoteId] = useState(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const editForm = (noteId) => {
+    setVisibleNoteId(noteId);
+    const selectedNote = notes.find((note) => note._id === noteId);
+    if (selectedNote) {
+      setTitle(selectedNote.title);
+      setContent(selectedNote.content);
+    }
+  };
+
+  const updateNote = async () => {
+    const noteObj = {
+      title: title,
+      content: content,
+    };
+    console.log(noteObj);
+    await axios.put(`/api/updateNote?id=${visibleNoteId}`, noteObj).then(() => {
+      window.location.reload(false);
+    });
+  };
+
+  const deleteNote = async (noteId) => {
+    await axios.delete(`/api/deleteNote?id=${noteId}`).then(() => {
+      window.location.reload(false);
+    });
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main className='h-screen max-w-screen-sm m-auto'>
+      <Navbar />
+      <section className=' grow p-4 mt-4 m-3 rounded-3xl bg-[#F4EAE0] '>
+        <ul className='max-w-lg m-auto'>
+          {notes.map((note, i) => (
+            <li className='p-4 mt-5 mb-4 rounded-3xl bg-[#FAF6F0]' key={i}>
+              <div>
+                <h1 className='text-2xl mb-2 font-semibold '>{note.title}</h1>
+              </div>
+              <div>
+                <p className='text-justify font-light'>{note.content}</p>
+              </div>
+              <div className='flex justify-end items-center mt-2'>
+                <div>
+                  <button
+                    onClick={() => editForm(note._id)}
+                    className='p-2 mr-3 rounded-md bg-[#698269] text-white'>
+                    Edit
+                  </button>
+                </div>
+                <div>
+                  <button
+                    onClick={() => deleteNote(note._id)}
+                    className='p-2   rounded-md bg-[#AA5656] text-white'>
+                    Hapus
+                  </button>
+                </div>
+              </div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+              {visibleNoteId === note._id && (
+                <div>
+                  <h2 className='text-center'>Update Note</h2>
+                  <form className='flex-col p-4 mt-1 mb-4 rounded-md bg-[##F4EAE0]'>
+                    <div>
+                      <input
+                        className='w-full p-4 bg-[#F4EAE0]'
+                        type='text'
+                        id='title'
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <textarea
+                        onChange={(event) => setContent(event.target.value)}
+                        className='w-full p-4 mt-3 bg-[#F4EAE0]'
+                        type='text'
+                        id='content'
+                        value={content}></textarea>
+                    </div>
+                    <div className='flex justify-end items-center'>
+                      <div>
+                        <button
+                          type='button'
+                          onClick={() => updateNote()}
+                          className='p-2 mr-3 rounded-md bg-[#698269] text-white'>
+                          Update
+                        </button>
+                      </div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+                      <div>
+                        <button
+                          onClick={() => setVisibleNoteId(null)}
+                          className='p-2 rounded-md bg-[#AA5656] text-white'>
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+      <footer className='m-3 text-center'>
+        <p>&copy; 2023 Muhammad Sahal Nurdin</p>
+      </footer>
     </main>
-  )
+  );
 }
