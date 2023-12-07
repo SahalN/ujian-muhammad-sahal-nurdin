@@ -22,17 +22,13 @@ The repository is organized into the following key directories:
 - **MongoDB**: Storing and retrieving data efficiently.
 
 ## Installation
-1. Clone the repository:
-   ```bash
+- Clone the repository:
    git clone https://github.com/your-username/your-repo.git
-cd your-repo
-npm install
-Install dependencies:
-
-bash
-
-cd your-repo
-npm install
+-  cd your-repo
+      npm install
+- Install dependencies:
+   cd your-repo
+   npm install
 
 ## Run the application:
 
