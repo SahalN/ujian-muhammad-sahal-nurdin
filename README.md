@@ -25,8 +25,10 @@ The repository is organized into the following key directories:
 - Clone the repository:
    git clone git@github.com:SahalN/ujian-muhammad-sahal-nurdin.git
 -  cd your-repo
+bash
       npm install
 - Install dependencies:
+bash
    cd your-repo
    npm install
 
@@ -36,7 +38,6 @@ bash
 
     npm run dev
 
-## Usage
 
 ##  Additional Notes
 - Ensure that MongoDB is properly configured with connection details in the application.
