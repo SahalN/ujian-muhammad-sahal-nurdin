@@ -1,4 +1,9 @@
 # Web Programming Exam Project Documentation
+![image](https://github.com/SahalN/ujian-muhammad-sahal-nurdin/assets/94037920/bf43ec87-087a-44e6-8172-48d11f7e775b)
+![image](https://github.com/SahalN/ujian-muhammad-sahal-nurdin/assets/94037920/40a913af-23ca-409f-bd2b-117261ad9919)
+![image](https://github.com/SahalN/ujian-muhammad-sahal-nurdin/assets/94037920/2551eea0-3e09-408a-b073-1c34de48cc90)
+
+
 
 ## Overview
 This GitHub repository is a submission for the practical exam requirements in the web programming course. The project showcases the implementation of various web programming concepts, including HTML, CSS, and JavaScript, while integrating MongoDB for data storage, Tailwind CSS for styling, and the Next.js framework for enhanced development.
