@@ -22,15 +22,17 @@ The repository is organized into the following key directories:
 - **MongoDB**: Storing and retrieving data efficiently.
 
 ## Installation
-- Clone the repository:
-   git clone git@github.com:SahalN/ujian-muhammad-sahal-nurdin.git
--  cd your-repo
-bash
-      npm install
-- Install dependencies:
-bash
-   cd your-repo
-   npm install
+#!/bin/bash
+
+# Clone the repository
+git clone git@github.com:SahalN/ujian-muhammad-sahal-nurdin.git
+
+# Change to your-repo directory
+cd ujian-muhammad-sahal-nurdin
+
+# Install npm dependencies
+npm install
+
 
 ## Run the application:
 
